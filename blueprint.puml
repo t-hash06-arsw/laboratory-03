@@ -1,0 +1,37 @@
+@startuml
+' Diagrama generado a partir de la imagen adjunta
+skinparam classAttributeIconSize 0
+
+title Blueprint services & persistence
+
+interface BlueprintPersistence <<interface>>
+
+class BlueprintServices {
+}
+
+class Blueprint {
+}
+
+class Point {
+}
+
+class InMemoryBlueprintsPersistence {
+}
+
+class AnotherBlueprintsPersistence {
+}
+
+' Relaciones
+Blueprint *-- "*" Point : contains
+
+' BlueprintServices usa/depende de Blueprint (dependencia punteada en la imagen)
+BlueprintServices ..> Blueprint : uses
+
+' BlueprintServices tiene inyección hacia la interfaz BlueprintPersistence
+BlueprintServices ..> BlueprintPersistence : <<injected>>
+
+' Implementaciones de la interfaz
+BlueprintPersistence <|-- InMemoryBlueprintsPersistence
+BlueprintPersistence <|-- AnotherBlueprintsPersistence
+
+@enduml
