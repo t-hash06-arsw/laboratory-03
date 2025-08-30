@@ -26,3 +26,32 @@ Para ilustrar el uso del framework Spring, y el ambiente de desarrollo para el u
 	```
 	
 6.	Modifique la configuración con anotaciones para que el Bean ‘GrammarChecker‘ ahora haga uso del  la clase SpanishSpellChecker (para que a GrammarChecker se le inyecte EnglishSpellChecker en lugar de  SpanishSpellChecker). Verifique el nuevo resultado.
+
+## Qué se hizo
+
+- Se habilitó el escaneo de componentes en `applicationContext.xml` para el paquete `edu.eci.arsw`.
+- Se marcó `GrammarChecker` como `@Service` y su dependencia `SpellChecker` se inyecta con `@Autowired` (setter injection).
+- Se implementaron dos `SpellChecker`:
+	- `EnglishSpellChecker` anotado con `@Service` como candidato por defecto.
+	- `SpanishSpellChecker` disponible (sin anotación) para evitar conflicto de beans simultáneos.
+- La clase `Main` crea el contexto con `ClassPathXmlApplicationContext` y obtiene el bean `GrammarChecker` para procesar un texto de ejemplo.
+
+Para cambiar a español, se puede: anotar `SpanishSpellChecker` con `@Service` y quitar la anotación de `EnglishSpellChecker`, o usar `@Primary`/`@Qualifier` en la inyección.
+
+## Cómo ejecutar con Maven Exec
+
+Desde la carpeta del proyecto (o ubicándose en `di-example/`), ejecutar:
+
+```bash
+# Desde la raíz del workspace
+mvn -f di-example/pom.xml exec:java
+
+# O dentro de di-example/
+mvn exec:java
+```
+
+Salida esperada (con el verificador en inglés activo):
+
+```
+Spell checking output:Checked with english checker:la la la Plagiarism checking output: Not available yet
+```
