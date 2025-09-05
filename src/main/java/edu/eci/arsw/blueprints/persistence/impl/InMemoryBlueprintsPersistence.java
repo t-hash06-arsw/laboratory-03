@@ -4,6 +4,7 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistence;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Repository
+@Primary
 public class InMemoryBlueprintsPersistence implements BlueprintPersistence {
 
     private final ConcurrentMap<String, Blueprint> blueprints = new ConcurrentHashMap<>();
